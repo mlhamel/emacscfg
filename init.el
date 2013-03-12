@@ -8,7 +8,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight)
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight yaml-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -45,4 +45,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
- (global-set-key (kbd "C-c o") 'occur)
+(global-set-key (kbd "C-c o") 'occur)
+(put 'downcase-region 'disabled nil)
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
