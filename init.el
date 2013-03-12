@@ -8,7 +8,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings)
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
