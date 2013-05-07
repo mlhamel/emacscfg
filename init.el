@@ -43,7 +43,7 @@
 
 (toggle-highlight-column-when-idle 1)
 (col-highlight-set-interval 2)
-(set-face-background 'col-highlight "color-33")
+(set-face-background 'col-highlight "grey17")
 (hl-line-mode 1)
 (global-hl-line-mode 1)
 (custom-set-faces
@@ -51,8 +51,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight ((t (:background "color-34" :foreground "brightwhite"))))
- '(hl-line ((t (:background "color-35")))))
+ '(highlight ((t (:background "grey17" :foreground "brightwhite"))))
+ '(hl-line ((t (:background "grey17")))))
 
 (turn-off-auto-fill)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
