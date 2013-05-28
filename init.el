@@ -43,7 +43,7 @@
 
 (toggle-highlight-column-when-idle 1)
 (col-highlight-set-interval 2)
-(set-face-background 'col-highlight "grey17")
+(set-face-background 'col-highlight "grey13")
 (hl-line-mode 1)
 (global-hl-line-mode 1)
 (custom-set-faces
@@ -51,8 +51,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight ((t (:background "grey17" :foreground "brightwhite"))))
- '(hl-line ((t (:background "grey17")))))
+ '(highlight ((t (:background "grey13" :foreground "brightwhite"))))
+ '(hl-line ((t (:background "grey13"))))
+ '(highlight-indent-face ((t (:background "grey6")))))
+
 
 (turn-off-auto-fill)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
@@ -70,3 +72,23 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 (add-to-list 'auto-mode-alist '("\\.mak$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
+
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "pyflakes" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+(load-library "flymake-cursor")
+
+(package-initialize)
+(elpy-enable)
