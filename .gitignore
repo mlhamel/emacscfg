@@ -6,3 +6,7 @@ eshell/
 places
 tramp
 url/
+ac-comphist.dat
+build/
+projectile-bookmarks.eld
+projectile.cache

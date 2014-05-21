@@ -8,7 +8,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight yaml-mode)
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck)
   "A list of packages to ensure are installed at launch.")
 
 (defun insert-quotes ()
@@ -51,9 +51,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight ((t (:background "grey13" :foreground "brightwhite"))))
- '(hl-line ((t (:background "grey13"))))
- '(highlight-indent-face ((t (:background "grey6")))))
+ '(highlight-indent-face ((t (:background "grey13"))))
+ '(hl-line ((t (:background "grey13")))))
 
 
 (turn-off-auto-fill)
@@ -64,31 +63,58 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(custom-safe-themes
+   (quote
+    ("16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+ '(virtualenv-root "~/venv/adintentis2/"))
 (global-set-key (kbd "C-c o") 'occur)
+(global-set-key "\C-cd" 'kill-whole-line)
 (put 'downcase-region 'disabled nil)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 (add-to-list 'auto-mode-alist '("\\.mak$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.mako$" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "pyflakes" (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
-(load-library "flymake-cursor")
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 (package-initialize)
-(elpy-enable)
+;;(elpy-enable)
+(load-theme 'gruber-darker)
+
+(global-linum-mode t)
+(setq linum-format "%d ")
+(set-face-attribute 'linum nil :foreground "#333333")
+
+
+(require 'project-mode)
+(project-load-all) ; Loads all saved projects. Not required.
+
+
+(defun fc/isearch-yank-symbol ()
+  "Yank the symbol at point into the isearch minibuffer.
+
+C-w does something similar in isearch but it only looks for
+the rest of the word. I want to look for the whole string. And
+symbol, not word, as I need this for programming the most."
+  (interactive)
+  (isearch-yank-pop
+   (save-excursion
+     (when (and (not isearch-forward)
+                isearch-other-end)
+       (goto-char isearch-other-end))
+     (thing-at-point 'symbol))))
+
+(define-key isearch-mode-map (kbd "M-S b") 'fc/isearch-yank-symbol)
+
+;; projectile
+(projectile-global-mode)
+(add-hook 'python-mode-hook 'projectile-on)
+(setq projectile-enable-caching t)
+
+
+;; yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
