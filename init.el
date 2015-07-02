@@ -8,7 +8,9 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight highlight-80+ highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck)
+(setq magit-last-seen-setup-instructions "1.4.0")
+
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile)
   "A list of packages to ensure are installed at launch.")
 
 (defun insert-quotes ()
@@ -39,8 +41,6 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-(add-hook 'python-mode-hook 'highlight-80+-mode)
-
 (toggle-highlight-column-when-idle 1)
 (col-highlight-set-interval 2)
 (set-face-background 'col-highlight "grey13")
@@ -54,7 +54,6 @@
  '(highlight-indent-face ((t (:background "grey13"))))
  '(hl-line ((t (:background "grey13")))))
 
-
 (turn-off-auto-fill)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
 (put 'ido-exit-minibuffer 'disabled nil)
@@ -65,7 +64,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+    ("dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
  '(virtualenv-root "~/venv/adintentis2/"))
 (global-set-key (kbd "C-c o") 'occur)
 (global-set-key "\C-cd" 'kill-whole-line)
@@ -82,15 +81,13 @@
 
 (package-initialize)
 ;;(elpy-enable)
-(load-theme 'gruber-darker)
 
 (global-linum-mode t)
 (setq linum-format "%d ")
 (set-face-attribute 'linum nil :foreground "#333333")
 
 
-(require 'project-mode)
-(project-load-all) ; Loads all saved projects. Not required.
+(require 'project)
 
 
 (defun fc/isearch-yank-symbol ()
@@ -113,8 +110,3 @@ symbol, not word, as I need this for programming the most."
 (projectile-global-mode)
 (add-hook 'python-mode-hook 'projectile-on)
 (setq projectile-enable-caching t)
-
-
-;; yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
