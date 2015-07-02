@@ -10,6 +10,8 @@
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
+(setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
+
 (defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile)
   "A list of packages to ensure are installed at launch.")
 
@@ -34,6 +36,9 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+(when (not (package-installed-p 'web-mode))
+    (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
