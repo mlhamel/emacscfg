@@ -37,8 +37,16 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+;; web-mode installation and configuration
 (when (not (package-installed-p 'web-mode))
     (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mako\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
