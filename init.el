@@ -3,7 +3,8 @@
 (package-initialize)
 
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+             '("melpa" . "http://melpa.org/packages/")
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -12,7 +13,7 @@
 
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile)
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile neotree flymake-ruby inf-ruby)
   "A list of packages to ensure are installed at launch.")
 
 (defun insert-quotes ()
@@ -47,6 +48,10 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
+;; neotree configuration
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -70,14 +75,45 @@
 (turn-off-auto-fill)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
 (put 'ido-exit-minibuffer 'disabled nil)
+
+;; font-size and type adjustment
+(set-default-font "Inconsolata 18")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(custom-enabled-themes (quote (tango-dark)))
  '(custom-safe-themes
    (quote
-    ("dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+    ("4c9ba94db23a0a3dea88ee80f41d9478c151b07cb6640b33bfc38be7c2415cc4" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+ '(fci-rule-color "#383838")
+ '(show-paren-mode t)
+ '(tool-bar-mode nil)
+ '(vc-annotate-background "#2b2b2b")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#bc8383")
+     (40 . "#cc9393")
+     (60 . "#dfaf8f")
+     (80 . "#d0bf8f")
+     (100 . "#e0cf9f")
+     (120 . "#f0dfaf")
+     (140 . "#5f7f5f")
+     (160 . "#7f9f7f")
+     (180 . "#8fb28f")
+     (200 . "#9fc59f")
+     (220 . "#afd8af")
+     (240 . "#bfebbf")
+     (260 . "#93e0e3")
+     (280 . "#6ca0a3")
+     (300 . "#7cb8bb")
+     (320 . "#8cd0d3")
+     (340 . "#94bff3")
+     (360 . "#dc8cc3"))))
+ '(vc-annotate-very-old-color "#dc8cc3")
  '(virtualenv-root "~/venv/adintentis2/"))
 (global-set-key (kbd "C-c o") 'occur)
 (global-set-key "\C-cd" 'kill-whole-line)
@@ -96,8 +132,8 @@
 ;;(elpy-enable)
 
 (global-linum-mode t)
-(setq linum-format "%d ")
-(set-face-attribute 'linum nil :foreground "#333333")
+(setq linum-format " %d ")
+(set-face-attribute 'linum nil :foreground "#ccc")
 
 
 (require 'project)
@@ -123,3 +159,15 @@ symbol, not word, as I need this for programming the most."
 (projectile-global-mode)
 (add-hook 'python-mode-hook 'projectile-on)
 (setq projectile-enable-caching t)
+
+;; rails development environment
+(require 'flymake-ruby)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+(setq ruby-deep-indent-paren nil)
+
+(global-set-key (kbd "C-c r") nil)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
+
+;(add-hook 'ruby-mode-hook 'rubocop-mode)
+
+;(global-set-key (kbd "C-c r r") 'inf-ruby)
