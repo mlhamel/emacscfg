@@ -9,11 +9,17 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+;; PATH
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
+;; magit setup
 (setq magit-last-seen-setup-instructions "1.4.0")
+(autoload 'magit-status "magit" nil t)
 
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
-(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile neotree flymake-ruby inf-ruby)
+(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-bindings col-highlight yaml-mode zenburn-theme jinja2-mode levenshtein flycheck project projectile neotree flymake-ruby inf-ruby jsx-mode)
   "A list of packages to ensure are installed at launch.")
 
 (defun insert-quotes ()
@@ -34,9 +40,9 @@
 
 (global-set-key (kbd "M-'") 'insert-quotes)
 
-(dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+;; (dolist (p my-packages)
+;;   (when (not (package-installed-p p))
+;;     (package-install p)))
 
 ;; web-mode installation and configuration
 (when (not (package-installed-p 'web-mode))
@@ -47,6 +53,7 @@
 (add-to-list 'auto-mode-alist '("\\.mako\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(setq web-mode-markup-indent-offset 2)
 
 ;; neotree configuration
 (require 'neotree)
@@ -77,7 +84,7 @@
 (put 'ido-exit-minibuffer 'disabled nil)
 
 ;; font-size and type adjustment
-(set-default-font "Inconsolata 18")
+;;(set-default-font "Inconsolata 18")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -88,8 +95,12 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(custom-safe-themes
    (quote
-    ("4c9ba94db23a0a3dea88ee80f41d9478c151b07cb6640b33bfc38be7c2415cc4" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+    ("95a6ac1b01dcaed4175946b581461e16e1b909d354ada79770c0821e491067c6" "4c9ba94db23a0a3dea88ee80f41d9478c151b07cb6640b33bfc38be7c2415cc4" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
  '(fci-rule-color "#383838")
+ '(nyan-mode t)
+ '(package-selected-packages
+   (quote
+    (jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(vc-annotate-background "#2b2b2b")
@@ -136,7 +147,7 @@
 (set-face-attribute 'linum nil :foreground "#ccc")
 
 
-(require 'project)
+;;(require 'project)
 
 
 (defun fc/isearch-yank-symbol ()
@@ -168,6 +179,40 @@ symbol, not word, as I need this for programming the most."
 (global-set-key (kbd "C-c r") nil)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 
-;(add-hook 'ruby-mode-hook 'rubocop-mode)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (column-enforce-mode 0))) ;; disable the 80 column rule
 
 ;(global-set-key (kbd "C-c r r") 'inf-ruby)
+
+;; mark-multiple
+(require 'inline-string-rectangle)
+(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+
+(require 'mark-more-like-this)
+(global-set-key (kbd "C-<") 'mark-previous-like-this)
+(global-set-key (kbd "C->") 'mark-next-like-this)
+(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
+(global-set-key (kbd "C-*") 'mark-all-like-this)
+
+(add-hook 'sgml-mode-hook
+          (lambda ()
+            (require 'rename-sgml-tag)
+            (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)))
+
+
+;; nyan-mode
+(require 'nyan-mode)
+
+
+;; git-mode
+(require 'git)
+
+
+(global-auto-revert-mode -1)
+
+;; jsx-mode
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(setq jsx-indent-level 2)
+(add-hook 'jsx-mode-hook
+          (lambda () (auto-complete-mode 1)))
