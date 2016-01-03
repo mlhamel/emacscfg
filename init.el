@@ -50,7 +50,12 @@
 
 ;; web-mode installation and configuration
 (when (not (package-installed-p 'web-mode))
-    (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
+  (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
+
+;; fireplace installation and configuration
+(when (not (package-installed-p 'fireplace))
+    (package-install-file (concat dotfiles-dir "/packages/fireplace.el")))
+(load "~/.emacs.d/packages/fireplace.elc")
 
 (package-initialize)
 
@@ -77,7 +82,6 @@
     (insert "\"")
     (goto-char (+ end 1))
     (insert "\"")))
-
 (global-set-key (kbd "M-'") 'insert-quotes)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -102,15 +106,15 @@
 (hl-line-mode 1)
 (global-hl-line-mode 1)
 
-(set-face-background 'col-highlight "black")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-  '(highlight ((t (:background "grey" :foreground "white"))))
-  '(hl-line ((t (:background "black"))))
-  )
+ '(col-highlight ((t (:background "black" (\, :foreground) "white"))))
+ '(highlight ((t (:background "grey" :foreground "white"))))
+ '(hl-line ((t (:background "black" (\, :foreground) "white"))))
+ '(region ((t (:foreground "white")))))
 
 (turn-off-auto-fill)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill)
@@ -126,37 +130,37 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
- '(custom-enabled-themes (quote (zenburn)))
+ '(custom-enabled-themes (quote (solarized-dark)))
  '(custom-safe-themes
-    (quote
-     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "19352d62ea0395879be564fc36bc0b4780d9768a964d26dfae8aad218062858d" "95a6ac1b01dcaed4175946b581461e16e1b909d354ada79770c0821e491067c6" "4c9ba94db23a0a3dea88ee80f41d9478c151b07cb6640b33bfc38be7c2415cc4" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "19352d62ea0395879be564fc36bc0b4780d9768a964d26dfae8aad218062858d" "95a6ac1b01dcaed4175946b581461e16e1b909d354ada79770c0821e491067c6" "4c9ba94db23a0a3dea88ee80f41d9478c151b07cb6640b33bfc38be7c2415cc4" "dd4db38519d2ad7eb9e2f30bc03fba61a7af49a185edfd44e020aa5345e3dca7" "16e7c7811fd8f1bc45d17af9677ea3bd8e028fce2dd4f6fa5e6535dea07067b1" "b4018b7d8352dc7f21c0906cd33621ec487e872a97527dcdad590f0fb50cf9e8" "fe6330ecf168de137bb5eddbf9faae1ec123787b5489c14fa5fa627de1d9f82b" default)))
  '(fci-rule-color "#383838")
  '(nyan-mode t)
  '(package-selected-packages
-    (quote
-     (anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
+   (quote
+    (fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(vc-annotate-color-map
-    (quote
-     ((20 . "#bc8383")
-      (40 . "#cc9393")
-      (60 . "#dfaf8f")
-      (80 . "#d0bf8f")
-      (100 . "#e0cf9f")
-      (120 . "#f0dfaf")
-      (140 . "#5f7f5f")
-      (160 . "#7f9f7f")
-      (180 . "#8fb28f")
-      (200 . "#9fc59f")
-      (220 . "#afd8af")
-      (240 . "#bfebbf")
-      (260 . "#93e0e3")
-      (280 . "#6ca0a3")
-      (300 . "#7cb8bb")
-      (320 . "#8cd0d3")
-      (340 . "#94bff3")
-      (360 . "#dc8cc3")))))
+   (quote
+    ((20 . "#bc8383")
+     (40 . "#cc9393")
+     (60 . "#dfaf8f")
+     (80 . "#d0bf8f")
+     (100 . "#e0cf9f")
+     (120 . "#f0dfaf")
+     (140 . "#5f7f5f")
+     (160 . "#7f9f7f")
+     (180 . "#8fb28f")
+     (200 . "#9fc59f")
+     (220 . "#afd8af")
+     (240 . "#bfebbf")
+     (260 . "#93e0e3")
+     (280 . "#6ca0a3")
+     (300 . "#7cb8bb")
+     (320 . "#8cd0d3")
+     (340 . "#94bff3")
+     (360 . "#dc8cc3")))))
 (global-set-key (kbd "C-c o") 'occur)
 (global-set-key "\C-cd" 'kill-whole-line)
 (put 'downcase-region 'disabled nil)
