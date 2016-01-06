@@ -1,3 +1,6 @@
+(setq user-full-name "Mathieu Leduc-Hamel")
+(setq user-mail-address "mathieu@mtlpy.org")
+
 (require 'package)
 
 (package-initialize)
@@ -17,7 +20,9 @@
 
 (setq my-packages (list 'anzu
                         'col-highlight
+                        'company
                         'goto-chg
+                        'go-mode
                         'jinja2-mode
                         'flycheck
                         'flymake-ruby
@@ -52,6 +57,10 @@
 (when (not (package-installed-p 'web-mode))
   (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
 
+;; company autocomplete
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;; fireplace installation and configuration
 (when (not (package-installed-p 'fireplace))
     (package-install-file (concat dotfiles-dir "/packages/fireplace.el")))
@@ -66,6 +75,7 @@
 (load "~/.emacs.d/my-ruby")
 (load "~/.emacs.d/my-python")
 (load "~/.emacs.d/my-web")
+(load "~/.emacs.d/my-markdown")
 
 (defun insert-quotes ()
   "Inserts quotes (\") around the current region or work."
@@ -90,6 +100,9 @@
 (setq indent-line-function 'insert-tab)
 (setq ns-use-srgb-colorspace t) ;; SRGB support for OSX
 
+;; line width
+(setq-default fill-column 120)
+
 ;; Always use two spaces to indentation
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
@@ -100,6 +113,10 @@
 (setq web-mode-code-indent-offset 2)
 (setq web-mode-css-indent-offset 2)
 
+;; empty lines
+(setq-default indicate-empty-lines t)
+(when (not indicate-empty-lines)
+  (toggle-indicate-empty-lines))
 
 (toggle-highlight-column-when-idle 1)
 (col-highlight-set-interval 2)
@@ -138,7 +155,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
+    (company go-mode fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(vc-annotate-color-map
@@ -194,6 +211,9 @@ symbol, not word, as I need this for programming the most."
 (global-set-key (kbd "C->") 'mark-next-like-this)
 (global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
 (global-set-key (kbd "C-*") 'mark-all-like-this)
+
+;; alarm configuration
+(setq ring-bell-function 'ignore)
 
 ;; nyan-mode
 (require 'nyan-mode)
