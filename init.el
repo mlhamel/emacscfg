@@ -89,6 +89,19 @@
 (eval-when-compile
   (require 'use-package))
 
+(require 'anzu)
+(require 'flymake-ruby)
+(require 'git)
+(require 'goto-chg)
+(require 'inline-string-rectangle)
+(require 'mark-more-like-this)
+(require 'multiple-cursors)
+(require 'nyan-mode)
+(require 'rspec-mode)
+(require 'rvm)
+(require 'web-mode)
+(require 'yaml-mode)
+
 (load "~/.emacs.d/my-ruby")
 (load "~/.emacs.d/my-python")
 (load "~/.emacs.d/my-web")
@@ -220,10 +233,7 @@ symbol, not word, as I need this for programming the most."
 (define-key isearch-mode-map (kbd "M-S b") 'fc/isearch-yank-symbol)
 
 ;; mark-multiple
-(require 'inline-string-rectangle)
 (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
-
-(require 'mark-more-like-this)
 (global-set-key (kbd "C-<") 'mark-previous-like-this)
 (global-set-key (kbd "C->") 'mark-next-like-this)
 (global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
@@ -232,15 +242,9 @@ symbol, not word, as I need this for programming the most."
 ;; alarm configuration
 (setq ring-bell-function 'ignore)
 
-;; nyan-mode
-(require 'nyan-mode)
-
-(require 'goto-chg)
-
 ;; git-mode and magit setup
 (setq magit-last-seen-setup-instructions "1.4.0")
 (autoload 'magit-status "magit" nil t)
-(require 'git)
 
 (defun create-tags (dir-name)
   "Create tags file."
@@ -248,7 +252,6 @@ symbol, not word, as I need this for programming the most."
   (eshell-command
    (format "find %s -type f -name \"*.[ch]\" | etags -" dir-name)))
 
-(require 'anzu)
 (global-anzu-mode +1)
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
@@ -258,8 +261,6 @@ symbol, not word, as I need this for programming the most."
 (setq auto-revert-verbose nil)
 
 ;; mutliple-cursors
-(require 'multiple-cursors)
-
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
