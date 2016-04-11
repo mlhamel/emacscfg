@@ -1,8 +1,11 @@
+*.elc
+
 .smex-items
 auto-save-list/
 backups/
 elpa/
 eshell/
+defuns/
 places
 tramp
 url/
@@ -12,3 +15,4 @@ projectile-bookmarks.eld
 projectile.cache
 ido.last
 recentf
+.mc-lists.el

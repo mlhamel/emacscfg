@@ -6,8 +6,14 @@
 (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
+;; robe configuration
+(chruby "2.2.3")
+(add-hook 'ruby-mode-hook 'robe-mode)
+
+;; projectile configuration
 (add-hook 'ruby-mode-hook 'projectile-on)
 (setq projectile-completion-system 'grizzl)
+
 
 ;; rails development environment
 (require 'flymake-ruby)
@@ -66,3 +72,8 @@
 ;; RVM support
 (require 'rvm)
 (rvm-use-default)
+
+;; ctags-update
+(autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
+(add-hook 'ruby-mode-common-hook  'turn-on-ctags-auto-update-mode)
+(global-set-key "\C-cE" 'ctags-update)
