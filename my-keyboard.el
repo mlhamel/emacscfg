@@ -1,7 +1,6 @@
 ;; alt IS META
 (when (eq system-type 'darwin)
-  (setq mac-option-modifier 'meta)
-  (setq mac-command-modifier nil))
+  (setq mac-option-modifier 'meta))
 
 (defun insert-quotes ()
   "Inserts quotes (\") around the current region or work."

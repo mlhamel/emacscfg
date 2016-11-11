@@ -16,3 +16,5 @@
   (if (eq (frame-parameter nil 'fullscreen) 'fullboth)  ;tests if already fullscreened
       (my-non-fullscreen)
     (my-fullscreen)))
+
+(global-set-key (kbd "<f11>") 'toggle-fullscreen)
