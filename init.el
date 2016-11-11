@@ -62,20 +62,11 @@
       (package-refresh-contents)
       (package-install package)))
 
-;; web-mode installation and configuration
-(when (not (package-installed-p 'web-mode))
-  (package-install-file (concat dotfiles-dir "/packages/web-mode.el")))
-
-;; Functions (load all files in defuns-dir)
-(setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
-(dolist (file (directory-files defuns-dir t "\\w+"))
+;; Load custom packages
+(setq packages-dir (expand-file-name "packages" user-emacs-directory))
+(dolist (file (directory-files packages-dir t "\\w+"))
   (when (file-regular-p file)
-    (load file)))
-
-;; fireplace installation and configuration
-(when (not (package-installed-p 'fireplace))
-    (package-install-file (concat dotfiles-dir "/packages/fireplace.el")))
-(load "~/.emacs.d/packages/fireplace.elc")
+    (package-install-file file)))
 
 (package-initialize)
 
@@ -92,12 +83,10 @@
 (require 'nyan-mode)
 (require 'rspec-mode)
 (require 'rvm)
-(require 'web-mode)
 (require 'yaml-mode)
 
-(load "~/.emacs.d/my-window")
-(load "~/.emacs.d/my-ruby")
-(load "~/.emacs.d/my-python")
-(load "~/.emacs.d/my-web")
-(load "~/.emacs.d/my-markdown")
-(load "~/.emacs.d/my-everything")
+;; Functions (load all files in defuns-dir)
+(setq defuns-dir (expand-file-name "defuns" user-emacs-directory))
+(dolist (file (directory-files defuns-dir t "\\w+"))
+  (when (file-regular-p file)
+    (load file)))
