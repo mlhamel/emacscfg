@@ -91,70 +91,22 @@
      (320 . "#8cd0d3")
      (340 . "#94bff3")
      (360 . "#dc8cc3")))))
-(global-set-key (kbd "C-c o") 'occur)
-(global-set-key "\C-cd" 'kill-whole-line)
 (put 'downcase-region 'disabled nil)
 
 (global-linum-mode t)
 (setq linum-format " %d ")
 (set-face-attribute 'linum nil :foreground "#ccc")
 
-(defun fc/isearch-yank-symbol ()
-  "Yank the symbol at point into the isearch minibuffer.
-
-C-w does something similar in isearch but it only looks for
-the rest of the word. I want to look for the whole string. And
-symbol, not word, as I need this for programming the most."
-  (interactive)
-  (isearch-yank-pop
-   (save-excursion
-     (when (and (not isearch-forward)
-                isearch-other-end)
-       (goto-char isearch-other-end))
-     (thing-at-point 'symbol))))
-
-(define-key isearch-mode-map (kbd "M-S b") 'fc/isearch-yank-symbol)
-
-;; mark-multiple
-(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
-(global-set-key (kbd "C-<") 'mark-previous-like-this)
-(global-set-key (kbd "C->") 'mark-next-like-this)
-(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
-(global-set-key (kbd "C-*") 'mark-all-like-this)
-
 ;; alarm configuration
 (setq ring-bell-function 'ignore)
 
-;; git-mode and magit setup
-(setq magit-last-seen-setup-instructions "1.4.0")
-(autoload 'magit-status "magit" nil t)
-
-(defun create-tags (dir-name)
-  "Create tags file."
-  (interactive "DDirectory: ")
-  (eshell-command
-   (format "find %s -type f -name \"*.[ch]\" | etags -" dir-name)))
-
+;; Enabling anzu-mode
 (global-anzu-mode +1)
-(global-set-key (kbd "M-%") 'anzu-query-replace)
-(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
 ;; Auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-;; mutliple-cursors
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
 ;; default encoding
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
-
-;; different shortcuts
-(global-set-key (kbd "C-;") #'comment-line)
-
-;; helm
-(global-set-key (kbd "C-c h f") 'helm-projectile)

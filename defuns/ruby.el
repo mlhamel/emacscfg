@@ -53,4 +53,5 @@
   ;; ctags-update
   (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
   (add-hook 'ruby-mode-common-hook  'turn-on-ctags-auto-update-mode)
-  (global-set-key "\C-cE" 'ctags-update))
+  (global-set-key "\C-cE" 'ctags-update)
+)

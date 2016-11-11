@@ -16,8 +16,10 @@
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+;; Defining emacs configuration folder
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
+;; Selected packages
 (setq my-packages (list 'ack
                         'ag
                         'anzu
@@ -57,6 +59,7 @@
                         'yaml-mode
                         'zenburn-theme))
 
+;; Install packages from our list
 (dolist (package my-packages)
    (when (not (package-installed-p package))
       (package-refresh-contents)
