@@ -5,7 +5,6 @@
   (add-to-list 'auto-mode-alist '("\\.mako$" . html-mode))
 
   (add-hook 'python-mode-hook 'projectile-on)
-
   (add-hook 'python-mode-hook 'flycheck-mode)
 
   (venv-initialize-interactive-shells) ;; if you want interactive shell support
