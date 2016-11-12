@@ -1,11 +1,3 @@
-;; company autocomplete
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-
-;; projectile
-(projectile-global-mode)
-(setq projectile-enable-caching t)
-
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (global-auto-revert-mode -1)
@@ -21,15 +13,13 @@
 (setq-default c-basic-offset 2)
 (setq css-indent-offset 2)
 (setq js-indent-level 2)
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
 
 ;; empty lines
 (setq-default indicate-empty-lines t)
 (when (not indicate-empty-lines)
   (toggle-indicate-empty-lines))
 
+;; highlihting
 (toggle-highlight-column-when-idle 1)
 (col-highlight-set-interval 2)
 (hl-line-mode 1)
@@ -50,7 +40,6 @@
 (put 'ido-exit-minibuffer 'disabled nil)
 
 ;; font-size and type adjustment
-;;(set-default-font "Inconsolata 18")
 (set-face-attribute 'default nil :height 200)
 
 (custom-set-variables
@@ -99,9 +88,6 @@
 
 ;; alarm configuration
 (setq ring-bell-function 'ignore)
-
-;; Enabling anzu-mode
-(global-anzu-mode +1)
 
 ;; Auto refresh dired, but be quiet about it
 (setq global-auto-revert-non-file-buffers t)
