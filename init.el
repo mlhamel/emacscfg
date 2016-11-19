@@ -20,44 +20,9 @@
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
 
 ;; Selected packages
-(setq my-packages (list 'ack
-                        'ag
-                        'anzu
-                        'col-highlight
-                        'company
-                        'chruby
-                        'goto-chg
-                        'go-mode
-                        'jinja2-mode
-                        'flycheck
-                        'flymake-ruby
-                        'grizzl
-                        'inf-ruby
-                        'jsx-mode
-                        'levenshtein
-                        'project
-                        'projectile
-                        'projectile-rails
-                        'rainbow-mode
-                        'robe
-                        'rspec-mode
-                        'ruby-tools
-                        'ruby-block
-                        'ruby-additional
-                        'ruby-hash-syntax
-                        'ruby-refactor
-                        'rust-mode
-                        'rvm
-                        'smartscan
-                        'solarized-theme
-                        'starter-kit
-                        'starter-kit-lisp
-                        'starter-kit-bindings
-                        'toml-mode
-                        'use-package
-                        'virtualenvwrapper
-                        'yaml-mode
-                        'zenburn-theme))
+(setq packages-cfg (expand-file-name "packages.el" user-emacs-directory))
+  (when (file-regular-p packages-cfg)
+    (load packages-cfg))
 
 ;; Install packages from our list
 (dolist (package my-packages)
@@ -109,7 +74,7 @@
  '(nyan-mode t)
  '(package-selected-packages
    (quote
-    (helm-projectile helm fish-mode string-inflection ag csv-mode key-leap rubocop ack seq use-package virtualenvwrapper graphviz-dot-mode robe chruby multiple-cursors elixir-mode smart-mode-line toml-mode rust-mode ctags-update grizzl company go-mode fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
+    (clojure-mode helm-projectile helm fish-mode string-inflection ag csv-mode key-leap rubocop ack seq use-package virtualenvwrapper graphviz-dot-mode robe chruby multiple-cursors elixir-mode smart-mode-line toml-mode rust-mode ctags-update grizzl company go-mode fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(vc-annotate-color-map

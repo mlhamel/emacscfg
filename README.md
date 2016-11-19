@@ -1,3 +1,5 @@
-# README #
+# README
 
-My amazing emacs configure !
+My amazing emacs configuration
+
+##
