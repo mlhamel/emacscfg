@@ -45,8 +45,8 @@
 (require 'flymake-ruby)
 (require 'git)
 (require 'goto-chg)
-(require 'inline-string-rectangle)
-(require 'mark-more-like-this)
+;;(require 'inline-string-rectangle)
+;;(require 'mark-more-like-this)
 (require 'multiple-cursors)
 (require 'nyan-mode)
 (require 'rspec-mode)
@@ -72,9 +72,6 @@
  '(fci-rule-color "#383838")
  '(magit-commit-arguments (quote ("--all")))
  '(nyan-mode t)
- '(package-selected-packages
-   (quote
-    (clojure-mode helm-projectile helm fish-mode string-inflection ag csv-mode key-leap rubocop ack seq use-package virtualenvwrapper graphviz-dot-mode robe chruby multiple-cursors elixir-mode smart-mode-line toml-mode rust-mode ctags-update grizzl company go-mode fireplace anzu rspec-mode rvm smartscan ruby-refactor ruby-hash-syntaxe ruby-additional ruby-block ruby-tools ruby-hash-syntax solarized-theme rainbow-mode ctags jsx-mode rtags zenburn-theme yaml-mode web-mode starter-kit-lisp starter-kit-bindings projectile-rails nyan-mode neotree markdown-mode mark-multiple levenshtein jinja2-mode git flymake-ruby flycheck column-enforce-mode col-highlight coffee-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(vc-annotate-color-map

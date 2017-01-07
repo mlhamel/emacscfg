@@ -11,10 +11,13 @@
                         'jinja2-mode
                         'flycheck
                         'flymake-ruby
+                        'git
                         'grizzl
                         'inf-ruby
                         'jsx-mode
                         'levenshtein
+                        'multiple-cursors
+                        'nyan-mode
                         'project
                         'projectile
                         'projectile-rails
@@ -30,9 +33,7 @@
                         'rvm
                         'smartscan
                         'solarized-theme
-                        'starter-kit
-                        'starter-kit-lisp
-                        'starter-kit-bindings
+                        'better-defaults
                         'toml-mode
                         'use-package
                         'virtualenvwrapper
